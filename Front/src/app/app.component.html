@@ -1,0 +1,87 @@
+<div>List de Contatos:
+<p *ngFor="let cont of (contatoService.contatos$ | async)">{{cont.name}}</p>
+</div>
+
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title>Adicionar contato</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="container">
+  <mat-form-field>
+    <input matInput [(ngModel)]="contato.name" placeholder="Nome">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="email.endereco" placeholder="Email">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="telefone.numero" placeholder="Telefone">
+  </mat-form-field>
+</mat-card-content>
+<mat-card-actions><button mat-raised-button (click)="cadastrar()">Adicionar Contato</button></mat-card-actions>
+</mat-card>
+
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title>Selecione contato existente</mat-card-title>
+      </mat-card-header>
+<mat-form-field>
+  <mat-select [(ngModel)]="contatoSelecionado" placeholder="Select">
+    <mat-option *ngFor="let cont of (contatoService.contatos$ | async)" [value]="cont">{{cont.name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+</mat-card>
+
+<div *ngIf="contatoSelecionado.contatoId != null">
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title>Contato selecionado</mat-card-title>
+      </mat-card-header>
+      <p>Nome: {{contatoSelecionado.name}}</p>
+      <hr>
+      <p>Telefones:</p>
+      <mat-list role="list">
+          <mat-list-item *ngFor="let em of contatoSelecionado.telefones" role="listitem">{{em.numero}} 
+            <!--<button mat-icon-button matTooltip="Remover" (click)="removerTelefone(em.telefoneId)">
+              <mat-icon>cancel</mat-icon>
+            </button>-->
+          </mat-list-item>
+      </mat-list>
+      <hr>
+      <p>Emails:</p>
+      <mat-list role="list">
+          <mat-list-item *ngFor="let em of contatoSelecionado.emails" role="listitem">{{em.endereco}}</mat-list-item>
+          <!-- <button mat-icon-button matTooltip="Remover" (click)="removerEmail(em.emailId)">
+              <mat-icon>cancel</mat-icon>
+            </button>-->
+      </mat-list>
+</mat-card>
+
+
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title>Editar contato</mat-card-title>
+        <mat-card-subtitle>Contato selecionado: {{contatoSelecionado.contatoId}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card class="card"><button mat-raised-button (click)="removerContato()">Remover contato</button></mat-card>
+
+      <mat-card class="card">
+          <mat-card-header>
+              <mat-card-title>Adicionar telefone</mat-card-title>
+            </mat-card-header>
+            <mat-form-field>
+            <input matInput [(ngModel)]="telefoneAdicional" placeholder="Telefone">
+            </mat-form-field>
+            <mat-card-actions><button mat-raised-button (click)="addTelefone()">Adicionar</button></mat-card-actions>
+      </mat-card>
+
+      <mat-card class="card">
+          <mat-card-header>
+              <mat-card-title>Adicionar email</mat-card-title>
+            </mat-card-header>
+            <mat-form-field>
+            <input matInput [(ngModel)]="emailAdicional" placeholder="Email">
+            </mat-form-field>
+            <mat-card-actions><button mat-raised-button (click)="addEmail()">Adicionar</button></mat-card-actions>
+      </mat-card>
+</mat-card>
+</div>
