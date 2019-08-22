@@ -13,6 +13,6 @@ namespace AgendaDeContatos.Models
         public int EmailId { get; set; }
 
         public string Endereco { get; set; }
-        public Contato Contato { get; set; }
+        public int ContatoId { get; set; }
     }
 }

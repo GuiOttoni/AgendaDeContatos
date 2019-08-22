@@ -29,7 +29,17 @@ namespace AgendaDeContatos
         {
             services.AddDbContext<ContatoContext>(options => options.UseInMemoryDatabase("testeDB"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddCors((options =>
+            {
+                options.AddPolicy("AllowAnyOrigin",
+                builder => builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials()
+                      .Build());
+            }));
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -43,8 +53,11 @@ namespace AgendaDeContatos
                 app.UseHsts();
             }
 
+            app.UseCors("AllowAnyOrigin");
+
             app.UseHttpsRedirection();
             app.UseMvc();
+            
         }
     }
 }

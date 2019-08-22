@@ -52,7 +52,7 @@ namespace AgendaDeContatos.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(contato).State = EntityState.Modified;
+            _context.Update(contato);
 
             try
             {
@@ -78,6 +78,7 @@ namespace AgendaDeContatos.Controllers
         public async Task<ActionResult<Contato>> PostContato(Contato contato)
         {
             _context.Contatos.Add(contato);
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetContato", new { id = contato.ContatoId }, contato);

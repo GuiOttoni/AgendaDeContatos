@@ -12,6 +12,6 @@ namespace AgendaDeContatos.Models
         [Key]
         public int TelefoneId { get; set; }
         public string Numero { get; set; }
-        public Contato Contato { get; set; }
+        public int ContatoId { get; set; }
     }
 }

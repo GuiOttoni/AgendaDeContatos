@@ -15,12 +15,12 @@ namespace AgendaDeContatos.Entity
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Email>()
-                .HasOne(p => p.Contato)
-                .WithMany(b => b.Emails);
-            modelBuilder.Entity<Telefone>()
-                .HasOne(p => p.Contato)
-                .WithMany(b => b.Telefones);
+            modelBuilder.Entity<Telefone>().HasOne<Contato>().WithMany().HasForeignKey(p => p.ContatoId);
+            modelBuilder.Entity<Email>().HasOne<Contato>().WithMany().HasForeignKey(p => p.ContatoId);
+
+            modelBuilder.Entity<Contato>(e => { e.HasKey(x => x.ContatoId); });
+            modelBuilder.Entity<Email>(e => { e.HasKey(x => x.EmailId); });
+            modelBuilder.Entity<Telefone>(e => { e.HasKey(x => x.TelefoneId); });
         }
 
         public DbSet<Contato> Contatos {get;set;}
